@@ -13,14 +13,12 @@
         android:text="Выберите предмет"
         android:textSize="20sp"
         android:textColor="@color/DimGray"
-
         />
 
     <Spinner
         android:id="@+id/spinnerSubjectChooser"
         android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:background="@color/GreenYellow"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/chooseSubjectName"
         app:layout_constraintEnd_toEndOf="parent"
         >

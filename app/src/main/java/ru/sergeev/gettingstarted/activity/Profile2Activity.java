@@ -69,13 +69,13 @@ public class Profile2Activity extends AppCompatActivity
 
         switch (itemId){
             case R.id.nav_camera:
-                fragment = new MarkActivity();
+                fragment = new MarkFragment();
                 break;
             case R.id.nav_gallery:
-                fragment = new MarkActivity();
+                fragment = new MarkFragment();
                 break;
             case R.id.nav_manage:
-                fragment = new MarkActivity();
+                fragment = new MarkFragment();
                 break;
         }
 
