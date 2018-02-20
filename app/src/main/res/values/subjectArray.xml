@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subjectArray">
+        <item>Математика</item>
+        <item>Русский язык</item>
+        <item>Физика</item>
+        <item>Литература</item>
+        <item>Физкультура</item>
+        <item>Информатика</item>
+    </string-array>
+</resources>
