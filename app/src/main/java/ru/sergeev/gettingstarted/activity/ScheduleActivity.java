@@ -27,17 +27,17 @@ public class ScheduleActivity extends AppCompatActivity {
 
         ArrayList<ScheduleRow> row = new ArrayList<>();
         ArrayList<ScheduleRow> row2 = new ArrayList<>();
-        row.add(new ScheduleRow(1, "math", "33", "Vasya", "9:00", "10:00"));
-        row.add(new ScheduleRow(2, "phis", "33", "Vasya", "9:00", "10:00"));
-        row.add(new ScheduleRow(3, "russ", "33", "Vasya", "9:00", "10:00"));
+        row.add(new ScheduleRow(1, "Математика", "33 каб", "Петров А. А.", "9:00", "10:00"));
+        row.add(new ScheduleRow(2, "Физика", "2 каб", "Семенова К. В.", "10:00", "11:00"));
+        row.add(new ScheduleRow(3, "Русский язык", "5 каб", "Иванова Е. Д.", "11:00", "12:00"));
 
-        row2.add(new ScheduleRow(1, "litra", "33", "Vasya", "9:00", "10:00"));
-        row2.add(new ScheduleRow(2, "biologic", "33", "Vasya", "9:00", "10:00"));
+        row2.add(new ScheduleRow(1, "Литература", "13 каб", "Романова Н. Н.", "9:00", "10:00"));
+        row2.add(new ScheduleRow(2, "Биология", "66 каб", "Петров А. А.", "10:00", "11:00"));
 
         ArrayList<DayCard> card1 = new ArrayList<>();
         card1.add(new DayCard("Понедельник", row));
         card1.add(new DayCard("Вторник", row2));
-        card1.add(new DayCard("Четверг", row2));
+        card1.add(new DayCard("Среда", row2));
 
         //recyclerView.setHasFixedSize(true);
         recyclerView = (RecyclerView) findViewById(R.id.scheduleDay);

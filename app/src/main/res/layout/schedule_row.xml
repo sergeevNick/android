@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:padding="@dimen/padding">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline1"
@@ -29,7 +27,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="1"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="9:00"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lessonNumber"
         tools:layout_editor_absoluteX="0dp" />
@@ -51,7 +49,7 @@
         app:layout_constraintEnd_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/lessonNumber"
         android:text="10:00"
-        android:textSize="16sp"
+        android:textSize="12sp"
          />
 
     <TextView
@@ -60,7 +58,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:text="Математика"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,13 +67,12 @@
         android:id="@+id/teacherFIO"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/subjectName"
-        app:layout_constraintEnd_toStartOf="@id/guideline2"
         android:paddingLeft="16dp"
         android:text="Иванова Е. Н."
-        android:textSize="20sp"
-         />
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/subjectName" />
 
     <TextView
         android:id="@+id/roomNumber"
@@ -86,7 +83,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:singleLine="true"
         android:text="86 каб."
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center_horizontal"/>
 
 
