@@ -27,12 +27,7 @@ public class MarkFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)  {
-        View v = inflater.inflate(R.layout.activity_mark, container, false);
-        //super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_mark);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        return v;
+        return inflater.inflate(R.layout.activity_mark, container, false);
     }
 
     @Override
@@ -56,12 +51,4 @@ public class MarkFragment extends Fragment {
         });
         getActivity().setTitle("Оценки");
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home) {
-//            finish(); // close this activity and return to preview activity (if there is any)
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }

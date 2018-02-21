@@ -77,6 +77,4 @@ public class ScheduleRowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemCount() {
         return rowList.size();
     }
-
-
 }

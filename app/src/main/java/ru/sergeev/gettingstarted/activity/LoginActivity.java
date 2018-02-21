@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
-                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                startActivity(new Intent(LoginActivity.this, Profile2Activity.class));
             }
         });
 
