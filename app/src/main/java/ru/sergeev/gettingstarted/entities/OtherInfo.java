@@ -1,9 +1,13 @@
 package ru.sergeev.gettingstarted.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class OtherInfo {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class OtherInfo extends RealmObject {
+
+    @PrimaryKey
     private Integer infoId;
 
     private String email;
@@ -12,22 +16,10 @@ public class OtherInfo {
 
     private Date birthDate;
 
-    private Student student;
-
-    private Teacher teacher;
-
     public OtherInfo(String email, String address, Date birthDate) {
         this.email = email;
         this.address = address;
         this.birthDate = birthDate;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
     }
 
     public Integer getInfoId() {

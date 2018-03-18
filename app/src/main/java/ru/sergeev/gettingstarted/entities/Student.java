@@ -1,11 +1,13 @@
 package ru.sergeev.gettingstarted.entities;
 
 
-import java.util.Set;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Student {
+public class Student extends RealmObject {
 
-
+    @PrimaryKey
     private Integer studentId;
 
     private Name name;
@@ -13,20 +15,10 @@ public class Student {
 
     private OtherInfo otherInfo;
 
-    private Set<Mark> marks;
-
     private Class studentClass;
 
     public void setStudentClass(Class studentClass) {
         this.studentClass = studentClass;
-    }
-
-    public Set<Mark> getMarks() {
-        return marks;
-    }
-
-    public void setMarks(Set<Mark> marks) {
-        this.marks = marks;
     }
 
     public Name getName() {

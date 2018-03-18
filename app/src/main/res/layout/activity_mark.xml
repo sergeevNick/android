@@ -24,4 +24,24 @@
         >
     </Spinner>
 
+    <EditText
+        android:id="@+id/textDayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddDay"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAddDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="saveDayToDB"
+        android:text="Add Day"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -1,22 +1,19 @@
 package ru.sergeev.gettingstarted.entities;
 
 
-import java.util.Set;
 
-public class Teacher {
-    //done
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Teacher extends RealmObject {
+
+    @PrimaryKey
     private Integer teacherId;
 
     private Name name;
 
     private OtherInfo otherInfo;
-
-    private Set<ScheduleRow> rows;
-
-    public void setRows(Set<ScheduleRow> rows) {
-        this.rows = rows;
-    }
 
     public Teacher(Name name, OtherInfo otherInfo) {
         this.name = name;
@@ -30,16 +27,8 @@ public class Teacher {
         return name;
     }
 
-    public void setName(Name name) {
-        this.name = name;
-    }
-
     public OtherInfo getOtherInfo() {
         return otherInfo;
-    }
-
-    public void setOtherInfo(OtherInfo otherInfo) {
-        this.otherInfo = otherInfo;
     }
 
     public Integer getTeacherId() {

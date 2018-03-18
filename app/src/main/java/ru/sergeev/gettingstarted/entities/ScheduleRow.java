@@ -1,18 +1,18 @@
 package ru.sergeev.gettingstarted.entities;
 
 
-public class ScheduleRow {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class ScheduleRow extends RealmObject {
 
+    @PrimaryKey
     private Integer scheduleRowId;
-
+    private Lesson lesson;
+    private Teacher teacher;
+    private Subject subject;
     private Schedule schedule;
 
-    private Lesson lesson;
-
-    private Teacher teacher;
-
-    private Subject subject;
 
     public Subject getSubject() {
         return subject;
@@ -38,9 +38,6 @@ public class ScheduleRow {
         this.lesson = lesson;
     }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
 
     public ScheduleRow() {
     }
@@ -51,5 +48,13 @@ public class ScheduleRow {
 
     public void setScheduleRowId(Integer scheduleRowId) {
         this.scheduleRowId = scheduleRowId;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

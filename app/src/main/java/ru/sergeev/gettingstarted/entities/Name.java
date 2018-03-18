@@ -1,7 +1,10 @@
 package ru.sergeev.gettingstarted.entities;
 
-public class Name {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Name extends RealmObject {
+    @PrimaryKey
     private Integer nameId;
 
     private String firstName;
@@ -11,33 +14,12 @@ public class Name {
     private String lastName;
 
 
-
     public Name(String firstName, String secondName, String lastName) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
     }
 
-    private Student student;
-
-    private Teacher teacher;
-
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-//    public Student getStudent() {
-//        return student;
-//    }
-
-//    public Teacher getTeacher() {
-//        return teacher;
-//    }
 
     public Integer getNameId() {
         return nameId;

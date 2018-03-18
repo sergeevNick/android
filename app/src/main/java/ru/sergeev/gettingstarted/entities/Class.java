@@ -2,34 +2,18 @@ package ru.sergeev.gettingstarted.entities;
 
 import java.util.Set;
 
-public class Class {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+
+public class Class extends RealmObject{
+
+    @PrimaryKey
     private Integer classId;
 
 
     private String number;
-
-    private Set<Student> students;
-
-
-    private Set<Schedule> schedules;
-
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
-    public Set<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
-    }
 
     public void setClassId(Integer classId) {
         this.classId = classId;

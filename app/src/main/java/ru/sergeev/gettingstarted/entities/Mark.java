@@ -1,10 +1,13 @@
 package ru.sergeev.gettingstarted.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class Mark {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Mark extends RealmObject {
 
+    @PrimaryKey
     private Integer markId;
 
     private Integer value;

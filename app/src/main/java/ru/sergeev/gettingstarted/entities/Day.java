@@ -1,19 +1,16 @@
 package ru.sergeev.gettingstarted.entities;
 
-import java.util.Set;
 
-public class Day {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Day extends RealmObject {
 
+    @PrimaryKey
     private Integer dayId;
 
     private String dayName;
-
-    private Set<Schedule> schedules;
-
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
-    }
 
     public void setDayId(Integer dayId) {
         this.dayId = dayId;

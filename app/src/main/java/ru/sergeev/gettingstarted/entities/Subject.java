@@ -1,32 +1,17 @@
 package ru.sergeev.gettingstarted.entities;
 
 
-import java.util.Set;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Subject {
-    //done?
-
+public class Subject extends RealmObject {
+    @PrimaryKey
     private Integer subjectId;
 
     private String name;
 
     private Integer room;
-
-    private Set<Mark> marks;
-
-    private Set<ScheduleRow> rows;
-
-    public void setRows(Set<ScheduleRow> rows) {
-        this.rows = rows;
-    }
-
-    public Set<Mark> getMarks() {
-        return marks;
-    }
-
-    public void setMarks(Set<Mark> marks) {
-        this.marks = marks;
-    }
 
     public Subject() {
     }

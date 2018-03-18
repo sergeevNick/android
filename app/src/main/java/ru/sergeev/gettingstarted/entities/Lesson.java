@@ -1,23 +1,17 @@
 package ru.sergeev.gettingstarted.entities;
 
-import java.sql.Time;
-import java.util.Set;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Lesson {
+public class Lesson extends RealmObject {
 
-
-
+    @PrimaryKey
     private Integer lessonId;
 
-    private Time startTime;
+    private String startTime;
 
-    private Time endTime;
-
-    private Set<ScheduleRow> rows;
-
-    public void setRows(Set<ScheduleRow> rows) {
-        this.rows = rows;
-    }
+    private String endTime;
 
     public Lesson() {
     }
@@ -26,11 +20,11 @@ public class Lesson {
         this.lessonId = lessonId;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -39,11 +33,11 @@ public class Lesson {
         return lessonId;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 }
