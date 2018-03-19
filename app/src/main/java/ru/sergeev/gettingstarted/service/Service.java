@@ -1,5 +1,6 @@
 package ru.sergeev.gettingstarted.service;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 import ru.sergeev.gettingstarted.DAO.DayRepository;
 import ru.sergeev.gettingstarted.entities.Day;
@@ -32,5 +33,15 @@ public class Service {
         dayRepository.saveDay(dayName);
     }
 
+    public void deleteDay(Integer id){
+        dayRepository.deleteDay(id);
+    }
 
+    public void deleteDayByName(String name,Realm realm){
+        dayRepository.deleteDayByName(name, realm);
+    }
+
+    public Day getDayByName(String name,Realm realm){
+        return dayRepository.findDayByDayName(name, realm);
+    }
 }

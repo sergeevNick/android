@@ -36,8 +36,14 @@ public class MarkFragment extends Fragment {
     private Realm realm;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)  {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_mark, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshSpinner();
     }
 
     @Override
@@ -47,14 +53,29 @@ public class MarkFragment extends Fragment {
         textForAddDay = view.findViewById(R.id.textDayName);
         buttonAddDay = view.findViewById(R.id.buttonAddDay);
         buttonAddDay.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            saveDayToDB();
-        }
-    });
+            @Override
+            public void onClick(View v) {
+                saveDayToDB();
+            }
+        });
         realm = Realm.getDefaultInstance();
 
-        refreshSpinner();
+        spinner.setSelected(false);  // otherwise listener will be called on initialization
+        spinner.setSelection(0, true);  // otherwise listener will be called on initialization
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    Service.getInstance().deleteDayByName(spinner.getSelectedItem().toString(), realm);
+                    Toast.makeText(parent.getContext(), "Item deleted with name: " + spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         getActivity().setTitle("Оценки");
     }
@@ -65,36 +86,27 @@ public class MarkFragment extends Fragment {
         realm.close();
     }
 
-    void refreshSpinner(){
-
+    void refreshSpinner() {
 
         ArrayList<String> dayArray = new ArrayList<>();
         RealmResults<Day> results = Service.getInstance().listAllDays();
-        if(results == null){
+        if (results == null) {
             return;
         }
 
         for (Day d : results) {
+            if (d == null) {
+                return;
+            }
             dayArray.add(d.getDayName());
         }
-        spinnerAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, dayArray);
-        //spinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.subjectArray, R.layout.support_simple_spinner_dropdown_item);
+        spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, dayArray);
         spinner.setAdapter((SpinnerAdapter) spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), (CharSequence) parent.getItemAtPosition(position), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
-    void saveDayToDB(){
+    void saveDayToDB() {
         Service.getInstance().addDay(textForAddDay.getText().toString());
         refreshSpinner();
+        Toast.makeText(getContext(), "Item added with name: " + textForAddDay.getText().toString(), Toast.LENGTH_LONG).show();
     }
 }

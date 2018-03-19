@@ -26,10 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ScheduleActivity" />
-        <activity android:name=".activity.MarkActivity" />
-        <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.SettingsActivity" />
         <activity
             android:name=".activity.Profile2Activity"
             android:label="@string/title_activity_profile2"

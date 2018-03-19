@@ -55,12 +55,12 @@ public class SettingsFragment extends Fragment {
         switch (requestCode){
             case 0:
                 if(requestCode == RESULT_OK){
-                    Log.i("SettingsActivity", "case 0");
+                    Log.i("SettingsFragment", "case 0");
                 }
                 break;
             case 2:
                 if(requestCode == RESULT_OK){
-                    Log.i("SettingsActivity", "case 1");
+                    Log.i("SettingsFragment", "case 1");
                 }
                 break;
         }
