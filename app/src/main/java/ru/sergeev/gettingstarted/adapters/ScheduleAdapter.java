@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
+import io.realm.RealmResults;
 import ru.sergeev.gettingstarted.R;
-import ru.sergeev.gettingstarted.classes.DayCard;
+import ru.sergeev.gettingstarted.entities.Schedule;
 
 /**
  * Created by serge on 16.02.2018.
@@ -19,14 +18,12 @@ import ru.sergeev.gettingstarted.classes.DayCard;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
-    private Context context;
     private LayoutInflater mInflater;
-    private static ArrayList<DayCard> cardList;
+    private static RealmResults<Schedule> cardList;
     private static RecyclerView childList;
 
     // data is passed into the constructor
-    public ScheduleAdapter(Context context, ArrayList<DayCard> objects) {
-        this.context = context;
+    public ScheduleAdapter(Context context, RealmResults<Schedule> objects) {
         this.cardList = objects;
         this.mInflater = LayoutInflater.from(context);
     }
@@ -41,9 +38,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ScheduleAdapter.ViewHolder holder, int position) {
-        DayCard card = cardList.get(position);
-        holder.dayName.setText(card.getDayName());
-        holder.scheduleRowAdapter.setRowList(card.getSubjects());
+        Schedule card = cardList.get(position);
+        if (card.getDay() != null) {
+            holder.dayName.setText(card.getDay().getDayName());
+            holder.scheduleRowAdapter.setRowList(card.getRows());
+        }
     }
 
     @Override

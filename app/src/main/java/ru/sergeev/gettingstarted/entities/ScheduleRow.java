@@ -9,9 +9,10 @@ public class ScheduleRow extends RealmObject {
     @PrimaryKey
     private Integer scheduleRowId;
     private Lesson lesson;
-    private Teacher teacher;
+    private User teacher;
     private Subject subject;
-    private Schedule schedule;
+
+    //private Schedule schedule;
 
 
     public Subject getSubject() {
@@ -22,11 +23,11 @@ public class ScheduleRow extends RealmObject {
         this.subject = subject;
     }
 
-    public Teacher getTeacher() {
+    public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
 
@@ -42,19 +43,18 @@ public class ScheduleRow extends RealmObject {
     public ScheduleRow() {
     }
 
+    public ScheduleRow(Integer scheduleRowId, Lesson lesson, User teacher, Subject subject) {
+        this.scheduleRowId = scheduleRowId;
+        this.lesson = lesson;
+        this.teacher = teacher;
+        this.subject = subject;
+    }
+
     public Integer getScheduleRowId() {
         return scheduleRowId;
     }
 
     public void setScheduleRowId(Integer scheduleRowId) {
         this.scheduleRowId = scheduleRowId;
-    }
-
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
     }
 }

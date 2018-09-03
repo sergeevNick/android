@@ -10,13 +10,23 @@ public class Schedule extends RealmObject {
     @PrimaryKey
     private Integer scheduleId;
 
-    private Class scheduleClass;
-
     private Day day;
 
-    public void setScheduleClass(Class scheduleClass) {
-        this.scheduleClass = scheduleClass;
+ //   private Grade grade;
+
+    private RealmList<ScheduleRow> rows;
+
+    public RealmList<ScheduleRow> getRows() {
+        return rows;
     }
+
+    public void setRows(RealmList<ScheduleRow> rows) {
+        this.rows = rows;
+    }
+
+    /*public void setGrade(Grade grade) {
+        this.grade = grade;
+    }*/
 
     public Day getDay() {
 

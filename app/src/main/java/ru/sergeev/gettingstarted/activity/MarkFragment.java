@@ -3,6 +3,9 @@ package ru.sergeev.gettingstarted.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +16,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import ru.sergeev.gettingstarted.R;
+import ru.sergeev.gettingstarted.adapters.MarkAdapter;
 import ru.sergeev.gettingstarted.entities.Day;
+import ru.sergeev.gettingstarted.entities.Mark;
+import ru.sergeev.gettingstarted.entities.Subject;
 import ru.sergeev.gettingstarted.service.Service;
 
 /**
@@ -29,15 +46,54 @@ import ru.sergeev.gettingstarted.service.Service;
 
 public class MarkFragment extends Fragment {
 
-    private EditText textForAddDay;
-    private Button buttonAddDay;
+    private RecyclerView marksRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private MarkAdapter markAdapter;
+    private RealmResults<Mark> marks;
     private Spinner spinner;
     private Adapter spinnerAdapter;
     private Realm realm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        RequestQueue queue = Volley.newRequestQueue(this.getContext());
+        String url = "http://192.168.0.102:8080/marks";
+
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Gson gson = new Gson();
+                        ArrayList<Mark> marks1 = gson.fromJson(response, new TypeToken<ArrayList<Mark>>() {
+                        }.getType());
+                        for (final Mark mark : marks1) {
+                            try {
+                                realm = Realm.getDefaultInstance();
+                                realm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        realm.insertOrUpdate(mark);
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                realm.close();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        queue.add(stringRequest);
         return inflater.inflate(R.layout.activity_mark, container, false);
+
     }
 
     @Override
@@ -49,15 +105,14 @@ public class MarkFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        marksRecyclerView = view.findViewById(R.id.markListView);
+        marksRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        marksRecyclerView.setLayoutManager(mLayoutManager);
+        marksRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
         spinner = view.findViewById(R.id.spinnerSubjectChooser);
-        textForAddDay = view.findViewById(R.id.textDayName);
-        buttonAddDay = view.findViewById(R.id.buttonAddDay);
-        buttonAddDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDayToDB();
-            }
-        });
         realm = Realm.getDefaultInstance();
 
         spinner.setSelected(false);  // otherwise listener will be called on initialization
@@ -67,8 +122,8 @@ public class MarkFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    Service.getInstance().deleteDayByName(spinner.getSelectedItem().toString(), realm);
-                    Toast.makeText(parent.getContext(), "Item deleted with name: " + spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                    getMarksList(spinner.getSelectedItem().toString());
+                    Toast.makeText(parent.getContext(), "Getting marks for subject: " + spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -86,27 +141,33 @@ public class MarkFragment extends Fragment {
         realm.close();
     }
 
-    void refreshSpinner() {
 
-        ArrayList<String> dayArray = new ArrayList<>();
-        RealmResults<Day> results = Service.getInstance().listAllDays();
-        if (results == null) {
-            return;
+    void getMarksList(String subjectName) {
+        try {
+            realm = Realm.getDefaultInstance();
+            marks = realm.where(Mark.class).findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        for (Day d : results) {
-            if (d == null) {
-                return;
-            }
-            dayArray.add(d.getDayName());
-        }
-        spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, dayArray);
-        spinner.setAdapter((SpinnerAdapter) spinnerAdapter);
+        markAdapter = new MarkAdapter(getActivity(), marks);
+        marksRecyclerView.setAdapter(markAdapter);
     }
 
-    void saveDayToDB() {
-        Service.getInstance().addDay(textForAddDay.getText().toString());
-        refreshSpinner();
-        Toast.makeText(getContext(), "Item added with name: " + textForAddDay.getText().toString(), Toast.LENGTH_LONG).show();
+    void refreshSpinner() {
+        RealmResults<Subject> subjects;
+        ArrayList<String> subjectsNames = new ArrayList<>();
+        try {
+            realm = Realm.getDefaultInstance();
+            subjects = realm.where(Subject.class).findAll();
+            for (Subject subject : subjects) {
+                subjectsNames.add(subject.getName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, subjectsNames);
+        spinner.setAdapter((SpinnerAdapter) spinnerAdapter);
     }
 }

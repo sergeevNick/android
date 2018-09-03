@@ -16,6 +16,12 @@ public class Subject extends RealmObject {
     public Subject() {
     }
 
+    public Subject(Integer subjectId, String name, Integer room) {
+        this.subjectId = subjectId;
+        this.name = name;
+        this.room = room;
+    }
+
     public Integer getSubjectId() {
         return subjectId;
     }

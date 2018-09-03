@@ -16,6 +16,12 @@ public class Lesson extends RealmObject {
     public Lesson() {
     }
 
+    public Lesson(Integer lessonId, String startTime, String endTime) {
+        this.lessonId = lessonId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public void setLessonId(Integer lessonId) {
         this.lessonId = lessonId;
     }

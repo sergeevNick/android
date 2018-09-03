@@ -20,17 +20,19 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginBottom="@dimen/padding"
             android:gravity="center_horizontal"
-            android:text="asasa"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:paddingTop="@dimen/padding"
             android:id="@+id/scheduleRowId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingTop="@dimen/padding"
+            app:layout_constraintTop_toTopOf="parent">
 
         </android.support.v7.widget.RecyclerView>
 

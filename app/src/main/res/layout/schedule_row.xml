@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding">
+    android:layout_marginBottom="@dimen/padding"
+>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline1"
@@ -53,7 +54,7 @@
          />
 
     <TextView
-        android:id="@+id/subjectName"
+        android:id="@+id/subject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
@@ -72,7 +73,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/subjectName" />
+        app:layout_constraintTop_toBottomOf="@id/subject" />
 
     <TextView
         android:id="@+id/roomNumber"

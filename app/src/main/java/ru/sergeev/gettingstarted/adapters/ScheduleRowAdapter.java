@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
 import ru.sergeev.gettingstarted.R;
-import ru.sergeev.gettingstarted.classes.ScheduleRow;
+import ru.sergeev.gettingstarted.entities.ScheduleRow;
 
 /**
  * Created by serge on 17.02.2018.
@@ -22,24 +23,24 @@ import ru.sergeev.gettingstarted.classes.ScheduleRow;
 
 public class ScheduleRowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<ScheduleRow> rowList;
+    private RealmList<ScheduleRow> rowList;
 
     public ScheduleRowAdapter() {
     }
 
-    public void setRowList(ArrayList<ScheduleRow> rowList) {
+    public void setRowList(RealmList<ScheduleRow> rowList) {
         if (this.rowList != rowList) {
             this.rowList = rowList;
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView lessonNumber;
-        public TextView startTime;
-        public TextView endTime;
-        public TextView subjectName;
-        public TextView teacherFIO;
-        public TextView roomNumber;
+        TextView lessonNumber;
+        TextView startTime;
+        TextView endTime;
+        TextView subjectName;
+        TextView teacherFIO;
+        TextView roomNumber;
 
 
         public ViewHolder(View itemView) {
@@ -47,10 +48,9 @@ public class ScheduleRowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             lessonNumber = itemView.findViewById(R.id.lessonNumber);
             startTime = itemView.findViewById(R.id.startTime);
             endTime = itemView.findViewById(R.id.endTime);
-            subjectName = itemView.findViewById(R.id.subjectName);
+            subjectName = itemView.findViewById(R.id.subject);
             teacherFIO = itemView.findViewById(R.id.teacherFIO);
             roomNumber = itemView.findViewById(R.id.roomNumber);
-            System.out.println(lessonNumber.getText());
         }
     }
 
@@ -65,12 +65,23 @@ public class ScheduleRowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder RowHolder, int position) {
         ViewHolder holder = (ViewHolder) RowHolder;
-        holder.lessonNumber.setText(Integer.toString(rowList.get(position).getLessonNumber()));
-        holder.startTime.setText(rowList.get(position).getStartTime());
-        holder.endTime.setText(rowList.get(position).getEndTime());
-        holder.subjectName.setText(rowList.get(position).getSubjectName());
-        holder.teacherFIO.setText(rowList.get(position).getTeacherName());
-        holder.roomNumber.setText(rowList.get(position).getRoom());
+        String startTime = rowList.get(position).getLesson().getStartTime();
+        String endTime = rowList.get(position).getLesson().getEndTime();
+        startTime = startTime.substring(0, startTime.length() - 3);
+        endTime = endTime.substring(0, endTime.length() - 3);
+        try {
+            holder.lessonNumber.setText(Integer.toString(rowList.get(position).getLesson().getLessonId()));
+            holder.startTime.setText(startTime);
+            holder.endTime.setText(endTime);
+            holder.subjectName.setText(rowList.get(position).getSubject().getName());
+            holder.teacherFIO.setText(rowList.get(position).getTeacher().getSecondName() + " "
+            +rowList.get(position).getTeacher().getFirstName() + " "
+            +rowList.get(position).getTeacher().getLastName());
+            holder.roomNumber.setText(rowList.get(position).getSubject().getRoom().toString() + " каб.");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException");
+        }
+
     }
 
     @Override

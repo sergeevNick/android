@@ -5,8 +5,6 @@ import java.util.Set;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import ru.sergeev.gettingstarted.entities.Mark;
-import ru.sergeev.gettingstarted.entities.Student;
-import ru.sergeev.gettingstarted.entities.Subject;
 
 public class MarkRepository {
 
@@ -25,16 +23,16 @@ public class MarkRepository {
     }
 
 
-    RealmResults<Mark> findMarksByStudentStudentId(Integer studentId) {
-        return realm.where(Mark.class).equalTo("student.studentId", studentId).findAllAsync();
+    RealmResults<Mark> findMarksByUserId(Integer studentId) {
+        return realm.where(Mark.class).equalTo("student.userId", studentId).findAllAsync();
     }
 
-    RealmResults<Mark> findMarksByStudentStudentIdAndSubjectSubjectId(Integer studentId, Integer subjectId) {
-        return realm.where(Mark.class).equalTo("student.studentId", studentId).and().equalTo("subject.subjectId", subjectId).findAllAsync()
+    RealmResults<Mark> findMarksByStudentIdAndSubjectId(Integer studentId, Integer subjectId) {
+        return realm.where(Mark.class).equalTo("student.userId", studentId).and().equalTo("subject.subjectId", subjectId).findAllAsync()
                 ;
     }
 
-    RealmResults<Mark> findMarksByStudentStudentIdAndSubjectName(Integer studentId, String subjectName) {
-        return realm.where(Mark.class).equalTo("student.studentId", studentId).and().equalTo("subject.name", subjectName).findAllAsync();
+    RealmResults<Mark> findMarksByStudentIdAndSubjectName(Integer studentId, String subjectName) {
+        return realm.where(Mark.class).equalTo("student.userId", studentId).and().equalTo("subject.name", subjectName).findAllAsync();
     }
 }

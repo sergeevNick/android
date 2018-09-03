@@ -9,22 +9,8 @@ public class Mark extends RealmObject {
 
     @PrimaryKey
     private Integer markId;
-
     private Integer value;
-
     private Date date;
-
-    private Student student;
-
-    private Subject subject;
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 
     public void setMarkId(Integer markId) {
         this.markId = markId;

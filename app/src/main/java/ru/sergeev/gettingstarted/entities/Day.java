@@ -31,4 +31,9 @@ public class Day extends RealmObject {
     public Day() {
 
     }
+
+    public Day(Integer dayId, String dayName) {
+        this.dayId = dayId;
+        this.dayName = dayName;
+    }
 }

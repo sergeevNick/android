@@ -1,22 +1,20 @@
 package ru.sergeev.gettingstarted.DAO;
 
 
-import java.util.Set;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
-import ru.sergeev.gettingstarted.entities.Class;
+import ru.sergeev.gettingstarted.entities.Grade;
 
 public class ClassRepository {
 
-    private RealmResults<Class> results;
-    private Class aClass;
+    private RealmResults<Grade> results;
+    private Grade aGrade;
     private Realm realm;
 
-    RealmResults<Class>findAll(){
+    RealmResults<Grade>findAll(){
         try {
             realm = Realm.getDefaultInstance();
-            results = realm.where(Class.class).findAllAsync();
+            results = realm.where(Grade.class).findAllAsync();
         } finally {
             if (realm != null) {
                 realm.close();
@@ -25,27 +23,27 @@ public class ClassRepository {
         return results;
     }
 
-    Class findClassByClassId(Integer id){
+    Grade findClassByClassId(Integer id){
         try {
             realm = Realm.getDefaultInstance();
-            aClass = realm.where(Class.class).equalTo("classId", id).findFirstAsync();
+            aGrade = realm.where(Grade.class).equalTo("classId", id).findFirstAsync();
         } finally {
             if (realm != null) {
                 realm.close();
             }
         }
-        return aClass;
+        return aGrade;
     }
 
-    Class findClassByNumber(String number){
+    Grade findClassByNumber(String number){
         try {
             realm = Realm.getDefaultInstance();
-            aClass = realm.where(Class.class).equalTo("number", number).findFirst();
+            aGrade = realm.where(Grade.class).equalTo("number", number).findFirst();
         } finally {
             if (realm != null) {
                 realm.close();
             }
         }
-        return aClass;
+        return aGrade;
     }
 }
