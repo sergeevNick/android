@@ -44,7 +44,6 @@ import ru.sergeev.gettingstarted.service.Service;
  */
 
 public class ScheduleFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private ScheduleAdapter scheduleAdapter;
     private RealmResults<Schedule> schedules;
@@ -58,7 +57,7 @@ public class ScheduleFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = "http://192.168.0.102:8080/grades/1/schedule";
 
-// Request a string response from the provided URL.
+        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

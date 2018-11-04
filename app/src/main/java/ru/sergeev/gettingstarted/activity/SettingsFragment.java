@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class SettingsFragment extends Fragment {
-
     private Button updatePhoto;
     private Button changePassword;
     private ImageView photo;
@@ -38,7 +36,6 @@ public class SettingsFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_settings, container, false);
         return v;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

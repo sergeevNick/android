@@ -12,11 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,23 +26,19 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import ru.sergeev.gettingstarted.R;
 import ru.sergeev.gettingstarted.adapters.MarkAdapter;
-import ru.sergeev.gettingstarted.entities.Day;
 import ru.sergeev.gettingstarted.entities.Mark;
 import ru.sergeev.gettingstarted.entities.Subject;
-import ru.sergeev.gettingstarted.service.Service;
 
 /**
  * Created by serge on 20.02.2018.
  */
 
 public class MarkFragment extends Fragment {
-
     private RecyclerView marksRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private MarkAdapter markAdapter;
@@ -56,7 +49,6 @@ public class MarkFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = "http://192.168.0.102:8080/marks";
@@ -111,7 +103,6 @@ public class MarkFragment extends Fragment {
         marksRecyclerView.setLayoutManager(mLayoutManager);
         marksRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         spinner = view.findViewById(R.id.spinnerSubjectChooser);
         realm = Realm.getDefaultInstance();
 
@@ -140,7 +131,6 @@ public class MarkFragment extends Fragment {
         super.onDestroy();
         realm.close();
     }
-
 
     void getMarksList(String subjectName) {
         try {
