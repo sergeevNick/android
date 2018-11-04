@@ -4,14 +4,13 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Grade extends RealmObject{
+public class Grade extends RealmObject {
 
     @PrimaryKey
     private Integer gradeId;
 
 
     private String number;
-
 
 
     public void setGradeId(Integer gradeId) {
@@ -31,7 +30,8 @@ public class Grade extends RealmObject{
         return number;
     }
 
-    public Grade() {    }
+    public Grade() {
+    }
 
     public Grade(Integer gradeId, String number) {
         this.gradeId = gradeId;
