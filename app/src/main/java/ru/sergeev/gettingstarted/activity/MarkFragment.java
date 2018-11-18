@@ -55,7 +55,7 @@ public class MarkFragment extends Fragment {
         String url = Environment.Mark.all;
 
         // Request a string response from the provided URL.
-        StringRequest stringRequest = RequestServiceData.get(url, new Params());
+        StringRequest stringRequest = RequestServiceData.get(url, new Params(), Mark.class);
         queue.add(stringRequest);
         return inflater.inflate(R.layout.activity_mark, container, false);
 

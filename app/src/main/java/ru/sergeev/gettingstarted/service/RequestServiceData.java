@@ -12,17 +12,18 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 import ru.sergeev.gettingstarted.entities.Mark;
+import ru.sergeev.gettingstarted.entities.Schedule;
 import ru.sergeev.gettingstarted.environment.Environment;
 import ru.sergeev.gettingstarted.environment.Params;
 
 public class RequestServiceData {
     private static Realm realm;
 
-    public static StringRequest get(String url, Params params) {
-        return RequestServiceData.request(url, Request.Method.GET, params, new Gson());
+    public static StringRequest get(String url, Params params, Class clazz) {
+        return RequestServiceData.request(url, Request.Method.GET, params, clazz, new Gson());
     }
 
-    private static StringRequest request(String url, Integer method, Params params, Gson data) {
+    private static StringRequest request(String url, Integer method, Params params, final Class clazz, Gson data) {
         url = Environment.baseUrl + url;
 
         Field[] fields = params.getClass().getDeclaredFields();
@@ -42,23 +43,10 @@ public class RequestServiceData {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        Gson gson = new Gson();
-                        ArrayList<Mark> marks1 = gson.fromJson(response, new TypeToken<ArrayList<Mark>>() {
-                        }.getType());
-                        for (final Mark mark : marks1) {
-                            try {
-                                realm = Realm.getDefaultInstance();
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        realm.insertOrUpdate(mark);
-                                    }
-                                });
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                realm.close();
-                            }
+                        if (clazz == Mark.class) {
+                            RequestServiceData.onMarkResponseCallback(response);
+                        } else if (clazz == Schedule.class) {
+                            RequestServiceData.onScheduleResponseCallback(response);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -67,5 +55,49 @@ public class RequestServiceData {
                 error.printStackTrace();
             }
         });
+    }
+
+    // TODO: move to generic templates
+    private static void onMarkResponseCallback(final String response) {
+        Gson gson = new Gson();
+        ArrayList<Mark> objects = gson.fromJson(response, new TypeToken<ArrayList<Mark>>() {
+        }.getType());
+        for (final Mark obj : objects) {
+            try {
+                realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.insertOrUpdate(obj);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
+        }
+    }
+
+    // TODO: move to generic templates
+    private static void onScheduleResponseCallback(final String response) {
+        Gson gson = new Gson();
+        ArrayList<Schedule> objects = gson.fromJson(response, new TypeToken<ArrayList<Schedule>>() {
+        }.getType());
+        for (final Schedule obj : objects) {
+            try {
+                realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.insertOrUpdate(obj);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
+        }
     }
 }
