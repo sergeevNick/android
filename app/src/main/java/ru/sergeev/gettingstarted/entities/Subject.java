@@ -1,17 +1,18 @@
 package ru.sergeev.gettingstarted.entities;
 
-
-import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 public class Subject extends RealmObject {
     @PrimaryKey
     private Integer subjectId;
-
     private String name;
-
     private Integer room;
+
+    @LinkingObjects("subject")
+    private final RealmResults<Mark> marks = null;
 
     public Subject() {
     }

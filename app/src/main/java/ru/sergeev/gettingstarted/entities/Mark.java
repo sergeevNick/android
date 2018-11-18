@@ -11,6 +11,8 @@ public class Mark extends RealmObject {
     private Integer markId;
     private Integer value;
     private Date date;
+    private Subject subject;
+    private User student;
 
     public void setMarkId(Integer markId) {
         this.markId = markId;
@@ -29,6 +31,14 @@ public class Mark extends RealmObject {
         return markId;
     }
 
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
     public Integer getValue() {
         return value;
     }
@@ -37,8 +47,15 @@ public class Mark extends RealmObject {
         return date;
     }
 
-    public Mark() {
+    public Subject getSubject() {
+        return subject;
+    }
 
+    public User getStudent() {
+        return student;
+    }
+
+    public Mark() {
     }
 
     public Mark(Integer value) {

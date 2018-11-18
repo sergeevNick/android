@@ -7,15 +7,15 @@ import ru.sergeev.gettingstarted.entities.ScheduleRow;
 public class ScheduleRowRepository {
     private Realm realm;
 
-    void getRealm() {
+    public void getRealm() {
         realm = Realm.getDefaultInstance();
     }
 
-    void closeRealm() {
+    public void closeRealm() {
         realm.close();
     }
 
-    RealmResults<ScheduleRow> findScheduleRowsByScheduleScheduleId(Integer scheduleId){
+    public RealmResults<ScheduleRow> findScheduleRowsByScheduleScheduleId(Integer scheduleId){
         return realm.where(ScheduleRow.class).equalTo("schedule.scheduleId", scheduleId).findAllAsync();
     }
 }
