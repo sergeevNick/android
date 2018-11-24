@@ -87,6 +87,4 @@
         android:textSize="20sp"
         android:gravity="center_horizontal"/>
 
-
-
 </android.support.constraint.ConstraintLayout>

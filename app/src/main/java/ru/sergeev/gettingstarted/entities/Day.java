@@ -1,7 +1,5 @@
 package ru.sergeev.gettingstarted.entities;
 
-
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -12,11 +10,12 @@ public class Day extends RealmObject {
 
     private String dayName;
 
-    public void setDayId(Integer dayId) {
-        this.dayId = dayId;
+    public Day() {
+
     }
 
-    public void setDayName(String dayName) {
+    public Day(Integer dayId, String dayName) {
+        this.dayId = dayId;
         this.dayName = dayName;
     }
 
@@ -24,16 +23,15 @@ public class Day extends RealmObject {
         return dayId;
     }
 
+    public void setDayId(Integer dayId) {
+        this.dayId = dayId;
+    }
+
     public String getDayName() {
         return dayName;
     }
 
-    public Day() {
-
-    }
-
-    public Day(Integer dayId, String dayName) {
-        this.dayId = dayId;
+    public void setDayName(String dayName) {
         this.dayName = dayName;
     }
 }

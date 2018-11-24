@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import ru.sergeev.gettingstarted.DAO.ScheduleRepository;
 import ru.sergeev.gettingstarted.R;
 import ru.sergeev.gettingstarted.adapters.ScheduleAdapter;
 import ru.sergeev.gettingstarted.entities.Schedule;
@@ -30,7 +31,8 @@ public class ScheduleFragment extends Fragment {
     private RecyclerView recyclerView;
     private ScheduleAdapter scheduleAdapter;
     private RealmResults<Schedule> schedules;
-    private Realm realm;
+    private Realm realm = Realm.getDefaultInstance();
+    private ScheduleRepository scheduleRepository = new ScheduleRepository(realm);
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,15 +47,14 @@ public class ScheduleFragment extends Fragment {
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = RequestServiceData.get(url, params, Schedule.class);
+        queue.add(stringRequest);
 
         try {
-            realm = Realm.getDefaultInstance();
-            schedules = realm.where(Schedule.class).findAll();
+            schedules = this.scheduleRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        queue.add(stringRequest);
         return v;
     }
 
@@ -71,8 +72,6 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (realm != null) {
-            realm.close();
-        }
+        realm.close();
     }
 }

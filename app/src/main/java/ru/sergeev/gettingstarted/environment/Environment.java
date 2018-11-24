@@ -16,7 +16,7 @@ public class Environment {
         private static String base = "/schedules";
 
         public static String all = Schedule.base;
-        public static String byGrade = Schedule.base + "/grades/:gradeId/schedule";
+        public static String byGrade = Schedule.base + "/grades/:gradeId";
 
     }
 

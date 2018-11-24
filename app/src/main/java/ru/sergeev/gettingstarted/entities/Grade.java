@@ -8,10 +8,7 @@ public class Grade extends RealmObject {
 
     @PrimaryKey
     private Integer gradeId;
-
-
     private String number;
-
 
     public void setGradeId(Integer gradeId) {
         this.gradeId = gradeId;
