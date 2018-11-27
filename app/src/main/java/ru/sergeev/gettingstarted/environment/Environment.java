@@ -1,9 +1,10 @@
 package ru.sergeev.gettingstarted.environment;
 
 public class Environment {
-    public static String baseUrl = "http://192.168.0.104:8080";
+    public static String baseUrl = "http://192.168.0.105:8080";
 
     public static class Mark {
+
         private static String base = "/marks";
 
         public static String all = Mark.base;

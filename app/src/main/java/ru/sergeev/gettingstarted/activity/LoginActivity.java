@@ -28,10 +28,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.sergeev.gettingstarted.R;
+import ru.sergeev.gettingstarted.environment.Environment;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,6 +72,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Getting base ip from file
+        try {
+            Environment.baseUrl = readIpFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -283,6 +296,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
+    }
+
+    private String readIpFile() throws IOException {
+        FileInputStream fis = null;
+        try {
+            fis = getApplicationContext().openFileInput("ip.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader bufferedReader = new BufferedReader(isr);
+
+        return bufferedReader.readLine();
     }
 
     private interface ProfileQuery {
