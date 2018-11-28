@@ -12,13 +12,17 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -40,10 +44,8 @@ import ru.sergeev.gettingstarted.service.RequestServiceData;
 
 public class MarkFragment extends Fragment {
     private RecyclerView marksRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private MarkAdapter markAdapter;
     private Spinner spinner;
-    private Adapter spinnerAdapter;
+    private Spinner addMarkSpinner;
     private Realm realm = Realm.getDefaultInstance();
     private MarkRepository markRepository = new MarkRepository(realm);
     private SubjectRepository subjectRepository = new SubjectRepository(realm);
@@ -58,7 +60,6 @@ public class MarkFragment extends Fragment {
         StringRequest stringRequest = RequestServiceData.get(url, new Params(), Mark.class);
         queue.add(stringRequest);
         return inflater.inflate(R.layout.activity_mark, container, false);
-
     }
 
     @Override
@@ -72,23 +73,33 @@ public class MarkFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         marksRecyclerView = view.findViewById(R.id.markListView);
         marksRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         marksRecyclerView.setLayoutManager(mLayoutManager);
         marksRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        Button addMarkButton = view.findViewById(R.id.addMarkButton);
+        addMarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postMark(1, spinner.getSelectedItem().toString(), addMarkSpinner.getSelectedItem().toString());
+
+                Toast.makeText(getContext(), "Added mark: " + addMarkSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         spinner = view.findViewById(R.id.spinnerSubjectChooser);
+        addMarkSpinner = view.findViewById(R.id.addMarkSpinner);
 
         spinner.setSelected(false);  // otherwise listener will be called on initialization
+        addMarkSpinner.setSelected(false);  // otherwise listener will be called on initialization
         spinner.setSelection(0, true);  // otherwise listener will be called on initialization
+        addMarkSpinner.setSelection(0, true);  // otherwise listener will be called on initialization
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    getMarksList(1, spinner.getSelectedItem().toString());
-
-                    Toast.makeText(parent.getContext(), "Getting marks for subject: " + spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-                }
+                getMarksList(1, spinner.getSelectedItem().toString());
+                Toast.makeText(parent.getContext(), "Getting marks for subject: " + spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -105,17 +116,38 @@ public class MarkFragment extends Fragment {
         this.realm.close();
     }
 
-    void getMarksList(Integer studentId, String subjectName) {
+    private void getMarksList(Integer studentId, String subjectName) {
         try {
             RealmResults<Mark> marks = this.markRepository.findMarksByStudentIdAndSubjectName(studentId, subjectName);
-            markAdapter = new MarkAdapter(getActivity(), marks);
+            MarkAdapter markAdapter = new MarkAdapter(getActivity(), marks);
             marksRecyclerView.setAdapter(markAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void refreshSpinner() {
+    private void postMark(final Integer studentId, final String subjectName, String markValue) {
+        try {
+            RequestQueue queue = Volley.newRequestQueue(this.getContext());
+            String url = Environment.Mark.byStudentAndSubject;
+
+            Subject subject = this.subjectRepository.findSubjectByName(subjectName);
+            Params params = new Params();
+            params.studentId = studentId.toString();
+            params.subjectId = subject.getSubjectId().toString();
+
+            JSONObject body = new JSONObject();
+            body.put("value", Integer.parseInt(markValue));
+
+            // Request a string response from the provided URL.
+            JsonObjectRequest jsonObjectRequest = RequestServiceData.post(url, params, Mark.class, body);
+            queue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void refreshSpinner() {
         try {
             ArrayList<String> subjectsNames = new ArrayList<>();
 
@@ -123,8 +155,9 @@ public class MarkFragment extends Fragment {
             for (Subject subject : subjects) {
                 subjectsNames.add(subject.getName());
             }
-            spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, subjectsNames);
-            spinner.setAdapter((SpinnerAdapter) spinnerAdapter);  } catch (Exception e) {
+            Adapter spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, subjectsNames);
+            spinner.setAdapter((SpinnerAdapter) spinnerAdapter);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

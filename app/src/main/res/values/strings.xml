@@ -26,4 +26,12 @@
     <string name="appwidget_text">0</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="marksNoSelected">Выберите оценку</string>
+    <string-array name="marks">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>
